@@ -1,0 +1,89 @@
+
+SQL> create table faculty(eno number(5),first_name varchar(10),last_name varchaar(10),dept_id number(10),sal number(6,2));
+create table faculty(eno number(5),first_name varchar(10),last_name varchaar(10),dept_id number(10),sal number(6,2))
+                                                                            *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> create table faculty(eno number(5),first_name varchar(10),last_name varchar(10),dept_id number(10),sal number(6,2));
+
+Table created.
+
+SQL> desc faculty
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ENO                                                NUMBER(5)
+ FIRST_NAME                                         VARCHAR2(10)
+ LAST_NAME                                          VARCHAR2(10)
+ DEPT_ID                                            NUMBER(10)
+ SAL                                                NUMBER(6,2)
+
+SQL> create or replace trigger before faculty
+  2  insert
+  3  before insert on faculty
+  4  for each row
+  5  begin
+  6  dbms_output.put_line('new faculty member:'||:new first_name ||''||:new last_name||'is being added');
+  7  end;
+  8  /
+create or replace trigger before faculty
+                                 *
+ERROR at line 1:
+ORA-04071: missing BEFORE, AFTER or INSTEAD OF keyword
+
+
+SQL> create or replace trigger before faculty
+  2  insert
+  3  before insert on faculty
+  4  for each row
+  5  begin
+  6  dbms_output.put_line('new faculty member:'||:new first_name ||''||:new last_name||'is being added');
+  7  end;
+  8  /
+create or replace trigger before faculty
+                                 *
+ERROR at line 1:
+ORA-04071: missing BEFORE, AFTER or INSTEAD OF keyword
+
+
+SQL> create or replace trigger before_faculty
+  2  insert
+  3  before insert on faculty
+  4  for each row
+  5  begin
+  6  dbms_output.put_line('new faculty member:'||:new first_name ||''||:new last_name||'is being added');
+  7  end;
+  8  /
+insert
+*
+ERROR at line 2:
+ORA-04071: missing BEFORE, AFTER or INSTEAD OF keyword
+
+
+SQL> create or replace trigger before_facultyinsert
+  2  before insert on faculty
+  3  for each row
+  4  begin
+  5  dbms_output.put_line('new faculty member:'||:new.first_name||''|:new.last_name||'is being added.');
+  6  end;
+  7  /
+
+Warning: Trigger created with compilation errors.
+
+SQL> CREATE OR REPLACE TRIGGER before_facultyinsert
+  2  BEFORE INSERT ON faculty
+  3  FOR EACH ROW
+  4  BEGIN
+  5    dbms_output.put_line('New faculty member: ' || :new.first_name || ' ' || :new.last_name || ' is being added.');
+  6  END;
+  7  /
+
+Trigger created.
+
+SQL> set serveroutput on;
+SQL> /
+
+Trigger created.
+
+SQL>
